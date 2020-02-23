@@ -4,6 +4,7 @@ import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
+import LoginComponent from './common/Loader/LoginComponent';
 
 const FormShape = () => {
   return <div>This is box shape!</div>
@@ -36,6 +37,7 @@ const App = (props) => {
     <Navbar/>
     <Route path={'/profile/:userId?'} render={() => <ProfileContainer />}/>
     <Route exact path={'/users'} render={() => <UsersContainer />}/>
+    <Route exact path="/login" render={ () => <LoginComponent /> }/>
     <Box/>
   </div>
 }

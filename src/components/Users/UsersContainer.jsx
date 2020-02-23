@@ -4,6 +4,8 @@ import UsersPage from './UsersPage/UsersPage';
 import { follow, unfollow, setIsFollowing} from '../../reducers/users-reducer';
 import Loader from '../../common/Loader/Loader';
 import {getUsersList, Subscribe, Unsubscribe} from '../../reducers/users-reducer';
+import { compose } from 'redux';
+import { authRedirect } from '../../hoc/authRedirect';
 
  class UsersContainer extends React.Component {
     constructor(props){
@@ -36,7 +38,7 @@ import {getUsersList, Subscribe, Unsubscribe} from '../../reducers/users-reducer
     }
 }
 
-let mapStateToProps = (state) => ({
+let props = (state) => ({
   users: state.usersPage.users,
   isFetching: state.usersPage.isFetching,
   currentPage: state.usersPage.currentPage,
@@ -45,6 +47,9 @@ let mapStateToProps = (state) => ({
   isFollowing: state.usersPage.isFollowing
 })
 
-export default connect(mapStateToProps, {
-  follow, unfollow, getUsersList, setIsFollowing,
-  Subscribe, Unsubscribe})(UsersContainer);
+const actions = {follow, unfollow, getUsersList, setIsFollowing,
+  Subscribe, Unsubscribe}
+
+export default 
+compose(authRedirect,
+connect(props, actions))(UsersContainer);
