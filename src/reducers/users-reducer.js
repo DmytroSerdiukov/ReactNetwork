@@ -64,6 +64,7 @@ export const getUsersList = (currentPage, pageSize) => {
     dispatch(setisFetching(true));
     getUsers(currentPage, pageSize).then( data => {
       dispatch(setUsers(data.items));
+      dispatch(setCurrentPage(currentPage));
       dispatch(setisFetching(false));
     });
   }

@@ -1,25 +1,30 @@
 import React from 'react';
+import { reduxForm, Field } from 'redux-form';
 
 const LoginComponent = props => {
   return (
     <div>
       <h2>LOGIN COMPONENT</h2>
-      <LoginForm />
+      <ReduxLoginForm onSubmit={showMe}/>
     </div>
   );
 };
 
-const LoginForm = () => {
+const showMe = (msg) => {
+    console.log(msg);
+}
+
+const LoginForm = (props) => {
   return <>
-    <form action="">
+    <form onSubmit={props.handleSubmit}>
         <div>
-            <input type="text" placeholder="Login"/>
+            <Field type="text" component="input" name="login" placeholder="Login"/>
         </div>
         <div>
-            <input type="text" placeholder="Password"/>
+            <Field type="text" component="input" name="password" placeholder="Password"/>
         </div>
         <div>
-            <input type="checkbox"/> remember me
+            <Field type="checkbox" component="input" name="rememberMe"/> Remember Me
         </div>
         <div>
             <button>Submit</button>
@@ -27,5 +32,6 @@ const LoginForm = () => {
     </form>
   </>
 }
+const ReduxLoginForm = reduxForm({form: "login"})(LoginForm);
 
 export default LoginComponent;
