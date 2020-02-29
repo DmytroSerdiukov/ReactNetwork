@@ -1,0 +1,11 @@
+$errorBorder: red;
+$errorBorderWidth: 2px;
+$typeErrorBorder: solid;
+
+.formControl {
+
+}
+
+.error {
+    border: $typeErrorBorder $errorBorder $errorBorderWidth;
+}
