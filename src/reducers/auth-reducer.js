@@ -1,4 +1,5 @@
 import { authMyself, authAPI } from "../api/api";
+import { stopSubmit } from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -35,11 +36,14 @@ export const authMe = () => {
 }
 
 export const login = (email, password, rememberMe) => {
-  return (dispatch) => {
+  return (dispatch) => { 
     authAPI.login(email, password, rememberMe)
     .then(response => {
       if (response.data.resultCode === 0) {
         dispatch(setAuthUserData());
+      } else {
+        let action = stopSubmit("login", {_error: "Invalid data"});
+        dispatch(action);
       }
     });
   }

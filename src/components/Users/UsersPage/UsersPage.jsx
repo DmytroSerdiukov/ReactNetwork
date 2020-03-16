@@ -14,7 +14,7 @@ const UsersPage = (props) => {
 
     return <> 
         <div>
-            {pages.map(p => <span className={props.currentPage === p && styles.selected }onClick={()=> {props.usersOnPage(p)}}>{p}</span>)}
+            {pages.map(p => <span className={props.currentPage === p && styles.selected } onClick={() => {props.usersOnPage(p)}}>{p}</span>)}
         </div>
 
         {props.users.map(u => <div key={u.id}>

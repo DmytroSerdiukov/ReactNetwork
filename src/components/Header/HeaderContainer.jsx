@@ -2,12 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import HeaderPage from './HeaderPage/HeaderPage';
-import {authMe, logout} from '../../reducers/auth-reducer';
+import { authMe, logout} from '../../reducers/auth-reducer';
+import { compose } from 'redux';
+import { authRedirect } from '../../hoc/authRedirect';
 
 class HeaderContainer extends React.Component {
 
   componentDidMount() {
-    this.props.authMe();
+    //this.props.authMe();
   }
 
   render() {
@@ -20,4 +22,5 @@ let mapStateToProps = (state) => ({
   login: state.auth.login
 })
 
-export default connect(mapStateToProps, {authMe, logout})(HeaderContainer);
+export default compose( authRedirect,
+  connect(mapStateToProps, {authMe, logout}))(HeaderContainer);

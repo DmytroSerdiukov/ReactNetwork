@@ -4,18 +4,21 @@ import { maxLength, required } from '../../utils/validators/validator';
 import { Input } from '../FormControls/FormControls';
 import { connect } from 'react-redux';
 import { login } from '../../reducers/auth-reducer';
+import { Redirect } from 'react-router';
 
 const LoginComponent = props => {
   const showMe = (data) => {
-    
     props.login(data.email, data.password, data.rememberMe = false);
   }
-  return (
-    <div>
+  return <> 
+  { props.isAuth ?
+    <Redirect to={'/profile'}/>
+    : <div>
       <h2>LOGIN COMPONENT</h2>
       <ReduxLoginForm onSubmit={showMe}/>
     </div>
-  ); 
+  }
+  </>; 
 };
 
 
@@ -31,12 +34,13 @@ const LoginForm = (props) => {
             />
         </div>
         <div>
-            <Field type="text" component={Input} name="password" placeholder="Password"
+            <Field type="password" component={Input} name="password" placeholder="Password"
                    validate={[required, length100]}/>
         </div>
         <div>
             <Field type="checkbox" component="input" name="rememberMe"/> Remember Me
         </div>
+          <div>{props.error}</div>
         <div>
             <button>Submit</button>
         </div>
@@ -44,5 +48,8 @@ const LoginForm = (props) => {
   </>
 }
 const ReduxLoginForm = reduxForm({form: "login"})(LoginForm);
+let props = (state) => ({
+  isAuth: state.auth.isAuth
+})
 
-export default connect(null, {login})(LoginComponent);
+export default connect(props, {login})(LoginComponent);

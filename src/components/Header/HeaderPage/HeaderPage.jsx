@@ -5,6 +5,7 @@ const HeaderPage = (props) => {
     const logout = () => {
         props.logout();
     }
+    
     return <> 
         {props.isAuth ? <div>
             <div>

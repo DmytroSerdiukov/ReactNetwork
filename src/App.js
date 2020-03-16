@@ -1,45 +1,42 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginComponent from './common/Loader/LoginComponent';
+import {connect} from 'react-redux';
+import { compose } from 'redux';
+import {authMe} from './reducers/auth-reducer';
+import {init} from './reducers/app-reducer';
+import Prealoder from './common/Loader/Loader';
 
-const FormShape = () => {
-  return <div>This is box shape!</div>
-}
+class App extends React.Component {
 
-class Box extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {show: false}
-    this.showToggle = this.showToggle.bind(this);
-  }
-
-  showToggle() {
-    const {show} = this.state;
-    this.setState({show: !show});
+  componentDidMount() {
+    this.props.init();
   }
 
   render() {
-    return <div>
-      <button onClick = {this.showToggle}>Switch On</button>
-      {this.state.show && <FormShape/>}
-    </div>
+    if (!this.props.initialized) {
+      return <Prealoder /> } else {
+    return (
+      <div>
+        <HeaderContainer />
+        <Navbar/>
+        <Route path={'/profile/:userId?'} render={() => <ProfileContainer />}/>
+        <Route exact path={'/users'} render={() => <UsersContainer />}/>
+        <Route exact path="/login" render={ () => <LoginComponent /> }/>
+      </div>
+    )
   }
-
+  }
 }
 
-const App = (props) => {
-  return <div>
-    <HeaderContainer />
-    <Navbar/>
-    <Route path={'/profile/:userId?'} render={() => <ProfileContainer />}/>
-    <Route exact path={'/users'} render={() => <UsersContainer />}/>
-    <Route exact path="/login" render={ () => <LoginComponent /> }/>
-    <Box/>
-  </div>
-}
+let props = (state) => ({
+  initialized: state.app.initialized,
+})
 
-export default App;
+export default compose(
+  withRouter,
+  connect(props, {authMe, init}))(App);
