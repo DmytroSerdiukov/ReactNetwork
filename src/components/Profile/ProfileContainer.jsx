@@ -39,4 +39,5 @@ const actions = {changeAreaText, addPost, setUserProfile,setUserData}
 export default compose( 
     authRedirect,
     connect(props, actions), 
-    withRouter)(ProfileContainer);
+     withRouter
+    )(ProfileContainer);

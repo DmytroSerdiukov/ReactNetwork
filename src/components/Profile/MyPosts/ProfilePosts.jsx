@@ -1,32 +1,43 @@
 import React from 'react';
+import { Field, reduxForm } from 'redux-form';
+import {addPost} from './../../../reducers/profile-reducer';
+import { connect } from 'react-redux';
 
 const Post = ({post}) => {
-    return <div>
-        <div>{post}</div>
-    </div>
+  return <div>
+    <div>{post}</div>
+  </div>
+}
+
+const PostForm = (props) => {
+    return <>
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field placeholder="Type something..." type="text" component="input" name="post"/>
+            </div>
+            <div>
+                <button>Send</button>
+            </div>
+        </form>
+    </>
 }
 
 const ProfilePosts = (props) => {
-    let areaRef = React.createRef();
 
-    let changeAreaValue = () => {
-        let areaValue = areaRef.current.value;
-        props.changeAreaText(areaValue);
-    }
-
-    let addPost = () => {
-        props.addPost();
+    let addPost = (data) => {
+        props.addPost(data.post);
     }
 
     let posts = props.posts.map(p => {return <Post post={p.post}/>})
 
     return <div>
-        <textarea ref={areaRef} onChange={changeAreaValue} value={props.areaText}></textarea>
-        <button onClick={addPost}>Send</button>
+        <ReduxPostForm onSubmit={addPost}/>
         <div>
             {posts}
         </div>
     </div>
 }
 
-export default ProfilePosts;
+let ReduxPostForm = reduxForm({form: "post"})(PostForm);
+
+export default connect(null, {addPost})(ProfilePosts);

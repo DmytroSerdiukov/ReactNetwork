@@ -8,6 +8,7 @@ let initialState = {
     profile: null,
     posts: [],
     areaText: '',
+    
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -17,7 +18,7 @@ const profileReducer = (state = initialState, action) => {
         }
         case ADD_POST: {
             let newPost = {
-                post: state.areaText
+                post: action.post
             }
             return {...state, posts: [...state.posts, newPost], areaText: '' }
         }
@@ -30,7 +31,7 @@ const profileReducer = (state = initialState, action) => {
 export default profileReducer;
 
 export const changeAreaText = (areaValue) => ({type: CHANGE_AREA_TEXT, areaValue  })
-export const addPost = () => ({type: ADD_POST})
+export const addPost = (data) => ({type: ADD_POST, post: data})
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 
 export const setUserData = (userId) => {
