@@ -18,8 +18,8 @@ class App extends React.Component {
   }
 
   render() {
-    // if (!this.props.initialized) {
-    //   return <Prealoder /> } else {
+    if (!this.props.initialized) {
+      return <Prealoder /> } else {
     return (
       <div>
         <HeaderContainer />
@@ -31,7 +31,7 @@ class App extends React.Component {
     )
   }
   }
-// }
+}
 
 let props = (state) => ({
   initialized: state.app.initialized,
