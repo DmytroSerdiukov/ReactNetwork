@@ -55,5 +55,6 @@ const actions = {follow, unfollow, getUsersList, setIsFollowing,
   Subscribe, Unsubscribe}
 
 export default 
-compose(authRedirect,
+compose(
+  //authRedirect,
 connect(props, actions))(UsersContainer);

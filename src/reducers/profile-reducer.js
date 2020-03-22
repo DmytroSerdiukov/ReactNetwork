@@ -20,7 +20,7 @@ const profileReducer = (state = initialState, action) => {
             let newPost = {
                 post: action.post
             }
-            return {...state, posts: [...state.posts, newPost], areaText: '' }
+            return {...state, posts: [...[state.posts], newPost], areaText: '' }
         }
         case SET_USER_PROFILE: return {...state, profile: action.profile}
         default:

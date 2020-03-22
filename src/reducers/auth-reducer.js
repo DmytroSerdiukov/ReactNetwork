@@ -11,14 +11,13 @@ let initialState = {
 }
 
 const authReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case SET_USER_DATA: 
-            return {...state, ...action.data, isAuth: true}
-        default:
-            return state;
-    }
+  switch(action.type) {
+    case SET_USER_DATA: 
+      return {...state, ...action.data, isAuth: true}
+    default:
+      return state;
+  }
 }
-
 export default authReducer;
 
 export const setAuthUserData = (userId, email, login) => ({type: SET_USER_DATA, data: {userId, email, login} })
@@ -41,7 +40,8 @@ export const login = (email, password, rememberMe) => {
     .then(response => {
       if (response.data.resultCode === 0) {
         dispatch(setAuthUserData());
-      } else {
+      } 
+      else {
         let action = stopSubmit("login", {_error: "Invalid data"});
         dispatch(action);
       }

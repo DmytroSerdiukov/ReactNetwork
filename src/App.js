@@ -38,5 +38,5 @@ let props = (state) => ({
 })
 
 export default compose(
-  withRouter,
+  //withRouter,
   connect(props, {authMe, init}))(App);
